@@ -60,15 +60,17 @@ console.log('');
 
 const tastes = ['vanilla', 'chocolate'];
 const cake = {
-		isChocolate: false,
+		isChocolate: function(){
+			return cake.taste === tastes[1];
+		},
 		taste: tastes[0] || tastes[1]
 };
 
+
 if (cake.taste === 'vanilla' || cake.taste === 'chocolate') {
 		console.log('This cake is either vanilla or chocolate.');
-		if (!cake.isChocolate) {
+		if (!cake.isChocolate()) {
 				console.log('This cake is not chocolate.');
-				cake.taste = tastes[0];
 				console.log('Therefore, this cake is ' + cake.taste + '.');
 		}else{
 				console.log("Now it sure. This cake is chocolate.");
