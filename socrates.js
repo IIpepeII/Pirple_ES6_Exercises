@@ -1,30 +1,25 @@
 //homework #3
 
-/*All men are mortal
-* Socrates is a man.
-* Therefore, socrates is mortal.
-*/
-
-
 const MEN = {
 		members: [],
 		couldItBeAMember: function(candidate) {
 				if (candidate instanceof Man) {
-						return candidate.isMortal() ? this.pushCandidate(candidate) : console.log(candidate.name + ' maybe immortal, but real men are mortals!');
+						return candidate.isMortal() ? this.pushCandidate(candidate) : candidate.name + ' maybe immortal, but real men are mortals!';
 				} else {
-						console.log("Only a real man could be a part of men!");
+						return "Only a real man could be a part of men!";
 				}
 		},
-		//pushCandidate function also try to find Socrates only for printing the original argument because after this point everything is checked
+		//pushCandidate function also try to find Socrates only for printing the original logical argument
 		pushCandidate: function(candidate) {
 				this.members.push(candidate);
 				if (candidate.name === "Socrates") {
-						console.log('All men are mortal\n' +
+						return '\nAll men are mortal\n' +
 								'Socrates is a man\n' +
-								'Therefore, socrates is mortal.'
-						);
+								'Therefore, socrates is mortal.';
+				} else {
+						return '\n' + candidate.name + ' is a man and mortal.';
 				}
-		},
+		}
 };
 
 
@@ -38,41 +33,57 @@ class Man {
 		}
 }
 
-const manA = new Man('Aristotle');
-const manB = new Man('Plato');
-const manC = new Man('Socrates');
-// const manC = new Object('Socrates');
-// manC.mortal = false;
 
-let candidates = [manA, manB, manC];
-
-for (let m in candidates) {
-		MEN.couldItBeAMember(candidates[m]);
+/*All men are mortal
+* Socrates is a man.
+* Therefore, socrates is mortal.
+*/
+function socratesSyllogism(candidates) {
+		for (let i = 0; i < candidates.length; i++) {
+				console.log(MEN.couldItBeAMember(candidates[i]));
+		}
 }
-
-console.log('');
 
 
 /* This cake is either vanilla or chocolate.
 *  This cake is not chocolate.
 *  Therefore, this cake is vanilla.
 */
+function cakeSyllogism() {
+		const possibleTastes = ['vanilla', 'chocolate'];
+		const cake = {
+				isChocolate: true,
+				actualTaste: possibleTastes[Math.round(Math.random())],
+				checkIfChocolate: function() {
+						this.isChocolate = this.actualTaste === possibleTastes[1];
+						return this.isChocolate;
+				}
+		};
 
-const tastes = ['vanilla', 'chocolate'];
-const cake = {
-		isChocolate: function(){
-			return cake.taste === tastes[1];
-		},
-		taste: tastes[0] || tastes[1]
-};
+		if (cake.actualTaste === 'vanilla' || cake.actualTaste === 'chocolate') {
+				console.log('This cake is either vanilla or chocolate.');
+				if (!cake.checkIfChocolate()) {
+						console.log('This cake is not chocolate.\n' +
+								'Therefore, this cake is ' +
+								cake.actualTaste + '.');
 
-
-if (cake.taste === 'vanilla' || cake.taste === 'chocolate') {
-		console.log('This cake is either vanilla or chocolate.');
-		if (!cake.isChocolate()) {
-				console.log('This cake is not chocolate.');
-				console.log('Therefore, this cake is ' + cake.taste + '.');
-		}else{
-				console.log("Now it sure. This cake is chocolate.");
+				} else {
+						console.log("Now it sure. This cake is " +
+								cake.actualTaste + ".");
+				}
 		}
 }
+
+
+const manA = new Man('Aristotle');
+const manB = new Man('Plato');
+const manC = new Man('Socrates');
+let candidates = [manA, manB, manC];
+
+const syllogismHomework = () => {
+		socratesSyllogism(candidates);
+		console.log('------------------------------------');
+		cakeSyllogism();
+};
+
+syllogismHomework();
